@@ -1,0 +1,1 @@
+DATA_PATH="notebook\data\stud.csv"
