@@ -7,11 +7,11 @@ import pickle
 from sklearn.metrics import r2_score
 from sklearn.model_selection import GridSearchCV
 
+
 from src.exception import CustomException
 from src.logger import get_logger
 import os
 logger=get_logger(__name__)
-
 
 
 def save_object(file_path, obj):
@@ -31,9 +31,9 @@ def evaluate_models(X_train, y_train,X_test,y_test,models,param):
     try:
         report = {}
 
-        for i in range(len(list(models))):
-            model = list(models.values())[i]
-            para=param[list(models.keys())[i]]
+        for model_name in models:
+            model=models[model_name]
+            para=param[model_name]
 
             gs = GridSearchCV(model,para,cv=3)
             gs.fit(X_train,y_train)
@@ -47,11 +47,9 @@ def evaluate_models(X_train, y_train,X_test,y_test,models,param):
 
             y_test_pred = model.predict(X_test)
 
-            train_model_score = r2_score(y_train, y_train_pred)
-
             test_model_score = r2_score(y_test, y_test_pred)
 
-            report[list(models.keys())[i]] = test_model_score
+            report[model_name] = test_model_score
 
         return report
 

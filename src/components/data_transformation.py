@@ -1,3 +1,4 @@
+
 import sys
 from dataclasses import dataclass
 
@@ -32,6 +33,7 @@ class DataTransformation:
         
         '''
         try:
+            numerical_columns = ["writing_score", "reading_score"]
             categorical_columns = [
                 "gender",
                 "race_ethnicity",
@@ -39,6 +41,7 @@ class DataTransformation:
                 "lunch",
                 "test_preparation_course",
             ]
+
 #the simple imputer handles the messing values
 
 
@@ -51,15 +54,23 @@ class DataTransformation:
                 ]
 
             )
+            num_pipeline= Pipeline(
+                steps=[
+                ("imputer",SimpleImputer(strategy="median")),
+                ("scaler",StandardScaler())
+
+                ]
+            )
+
 
             logger.info(f"Categorical columns: {categorical_columns}")
+            logger.info(f"Numerical columns: {numerical_columns}")
 
             preprocessor=ColumnTransformer(
                 [
+                ("num_pipeline",num_pipeline,numerical_columns),
                 ("cat_pipelines",cat_pipeline,categorical_columns)
                 ]
-
-
             )
 
             return preprocessor
@@ -80,17 +91,12 @@ class DataTransformation:
 
             preprocessing_obj=self.get_data_transformer_object()
 
-            target_column_name = "average_score"
-            numerical_columns = ["writing_score", "reading_score", "math_score"]
+            target_column_name = "math_score"
 
-            # create the target as the mean of the 3 scores (row by row)
-            train_df[target_column_name] = train_df[numerical_columns].mean(axis=1)
-            test_df[target_column_name] = test_df[numerical_columns].mean(axis=1)
-
-            input_feature_train_df = train_df.drop(columns=[target_column_name] + numerical_columns)
+            input_feature_train_df = train_df.drop(columns=target_column_name)
             target_feature_train_df = train_df[target_column_name]
 
-            input_feature_test_df = test_df.drop(columns=[target_column_name] + numerical_columns)
+            input_feature_test_df = test_df.drop(columns=target_column_name)
             target_feature_test_df = test_df[target_column_name]
 
             logger.info(
