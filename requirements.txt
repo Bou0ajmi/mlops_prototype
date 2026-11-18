@@ -2,7 +2,6 @@ pandas
 numpy
 seaborn
 scikit-learn
-catboost
 matplotlib
 xgboost-cpu
 flask
