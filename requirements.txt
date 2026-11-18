@@ -5,3 +5,6 @@ scikit-learn
 catboost
 xgboost
 Flask
+fastapi
+uvicorn
+jinja2
