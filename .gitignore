@@ -8,6 +8,8 @@ wheels/
 
 # Virtual environments
 artifacts/
+notebook/
 .venv
 .env
+
 
