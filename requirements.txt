@@ -3,8 +3,11 @@ numpy
 seaborn
 scikit-learn
 catboost
+matplotlib
 xgboost
-Flask
+flask
 fastapi
 uvicorn
 jinja2
+python-multipart
+
