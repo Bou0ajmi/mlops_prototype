@@ -4,7 +4,7 @@ seaborn
 scikit-learn
 catboost
 matplotlib
-xgboost
+xgboost-cpu
 flask
 fastapi
 uvicorn
